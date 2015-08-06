@@ -35,6 +35,9 @@ public class KKMultiServerThread extends Thread {
 
             int cont=0;
             while ((inputLine = in.readLine()) != null) {
+                
+                //System.out.println("IP: " + socket.getInetAddress().getHostName() + "datos: " + inputLine);
+                
                 outputLine = kkp.processInput(inputLine);
                 out.println(outputLine);
                 if (outputLine.equals("OK")) {

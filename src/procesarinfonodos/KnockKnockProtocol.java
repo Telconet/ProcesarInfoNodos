@@ -22,6 +22,8 @@ public class KnockKnockProtocol {
         Statement st;
 
         StringTokenizer campos = new StringTokenizer(theInput, ",");
+        
+        
 
         String sql;
         if (campos.countTokens() == 21) {
@@ -59,19 +61,38 @@ public class KnockKnockProtocol {
             } catch (SQLException ex) {
                 return ("Error: " + ex.toString());
             }
-        } 
+        }     
         else if (campos.countTokens() == 4) {
-            sql = "INSERT INTO Eventos (id_nodo,fecha,hora,evento) "
-                    + "VALUES (" + campos.nextToken() + ",'" + campos.nextToken() + "','" + campos.nextToken() + "', '" + campos.nextToken() + "' )";
-            try {
-                st = miConexion.createStatement();
-                st.executeUpdate(sql);
-                miConexion.close();
-                return ("OK");
-            } catch (SQLException ex) {
-                return ("Error: " + ex.toString());
+            String id_nodo = campos.nextToken();
+            String fecha = campos.nextToken();
+            String hora = campos.nextToken();
+            String evento = campos.nextToken();            
+            
+            if(evento.toLowerCase().contains("aire")){
+                sql = "INSERT INTO Eventos_AACC (id_nodo,fecha,hora,evento) "
+                    + "VALUES (" + id_nodo + ",'" + fecha + "','" + hora + "', '" + evento + "' )";
+                try {
+                    st = miConexion.createStatement();
+                    st.executeUpdate(sql);
+                    miConexion.close();
+                    return ("OK");
+                } catch (SQLException ex) {
+                    return ("Error: " + ex.toString());
+                }
             }
-        }         
+            else{
+                sql = "INSERT INTO Eventos (id_nodo,fecha,hora,evento) "
+                        + "VALUES (" + id_nodo + ",'" + fecha + "','" + hora + "', '" + evento + "' )";
+                try {
+                    st = miConexion.createStatement();
+                    st.executeUpdate(sql);
+                    miConexion.close();
+                    return ("OK");
+                } catch (SQLException ex) {
+                    return ("Error: " + ex.toString());
+                }
+            }
+        }
         else {
             return ("FALLO con " + theInput);
         }
