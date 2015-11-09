@@ -7,6 +7,9 @@ package procesarinfonodos;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.StringTokenizer;
 
 /**
@@ -23,6 +26,16 @@ public class KnockKnockProtocol {
 
         StringTokenizer campos = new StringTokenizer(theInput, ",");
         
+        Calendar cal = Calendar.getInstance();
+        Date tiempo = cal.getTime();
+        SimpleDateFormat fechaSDF = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat horaSDF = new SimpleDateFormat("HH:mm:ss");
+        
+        
+        String fecha = fechaSDF.format(tiempo);
+        String hora = horaSDF.format(tiempo);
+        
+        
         
 
         String sql;
@@ -31,7 +44,12 @@ public class KnockKnockProtocol {
                     + "corrienteAC_3,voltajeDC_2,corrienteDC_2,temperatura_2,corrienteAC_4,"
                     + "voltajeDC_3,corrienteDC_3,temperatura_3,voltajeDC_4,corrienteDC_4,voltajeAC_1,"
                     + "humedad,corrienteAC_1,voltajeAC_2,corrienteAC_2,voltajeDC_1) "
-                    + "VALUES (" + campos.nextToken() + ",'" + campos.nextToken() + "','" + campos.nextToken() + "'," + campos.nextToken() + "," + campos.nextToken() + ","
+                    + "VALUES (" + campos.nextToken() + ",'";
+            
+                    campos.nextToken();     //obviamos la fecha y hora del paquete.
+                    campos.nextToken();
+                    
+                    sql = sql + fecha + "','" +  hora + "'," + campos.nextToken() + "," + campos.nextToken() + ","
                     + "" + campos.nextToken() + "," + campos.nextToken() + "," + campos.nextToken() + "," + campos.nextToken() + "," + campos.nextToken() + ","
                     + "" + campos.nextToken() + "," + campos.nextToken() + "," + campos.nextToken() + "," + campos.nextToken() + "," + campos.nextToken() + "," + campos.nextToken() + ","
                     + "" + campos.nextToken() + "," + campos.nextToken() + "," + campos.nextToken() + "," + campos.nextToken() + "," + campos.nextToken() + " )";
@@ -48,7 +66,12 @@ public class KnockKnockProtocol {
                     + "corrienteAC_3,voltajeDC_2,corrienteDC_2,temperatura_2,corrienteAC_4,"
                     + "voltajeDC_3,corrienteDC_3,temperatura_3,voltajeDC_4,corrienteDC_4,voltajeAC_1,"
                     + "humedad,corrienteAC_1,voltajeAC_2,corrienteAC_2,voltajeDC_1,aire_principal,aire_backup) "
-                    + "VALUES (" + campos.nextToken() + ",'" + campos.nextToken() + "','" + campos.nextToken() + "'," + campos.nextToken() + "," + campos.nextToken() + ","
+                    + "VALUES (" + campos.nextToken() + ",'";
+            
+                    campos.nextToken();
+                    campos.nextToken();
+                    
+                    sql = sql + fecha + "','" + hora + "'," + campos.nextToken() + "," + campos.nextToken() + ","
                     + campos.nextToken() + "," + campos.nextToken() + "," + campos.nextToken() + "," + campos.nextToken() + "," + campos.nextToken() + ","
                     + campos.nextToken() + "," + campos.nextToken() + "," + campos.nextToken() + "," + campos.nextToken() + "," + campos.nextToken() + "," + campos.nextToken() + ","
                     + campos.nextToken() + "," + campos.nextToken() + "," + campos.nextToken() + "," + campos.nextToken() + "," + campos.nextToken() + ","
@@ -64,8 +87,8 @@ public class KnockKnockProtocol {
         }     
         else if (campos.countTokens() == 4) {
             String id_nodo = campos.nextToken();
-            String fecha = campos.nextToken();
-            String hora = campos.nextToken();
+            campos.nextToken();
+            campos.nextToken();
             String evento = campos.nextToken();            
             
             if(evento.toLowerCase().contains("aire")){
