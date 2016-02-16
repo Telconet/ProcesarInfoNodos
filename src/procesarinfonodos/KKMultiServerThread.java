@@ -33,23 +33,27 @@ public class KKMultiServerThread extends Thread {
             
             out.println("Inicio");
 
-            int cont=0;
+            int cont=0; 
+            
             while ((inputLine = in.readLine()) != null) {
                 
-                //System.out.println("IP: " + socket.getInetAddress().getHostName() + "datos: " + inputLine);
+                System.out.println("IP: " + socket.getInetAddress().getHostName() + "datos: " + inputLine);
                 
                 outputLine = kkp.processInput(inputLine);
-                out.println(outputLine);
+                /*out.println(outputLine);
                 if (outputLine.equals("OK")) {
                     break;
                 }else{
                     cont++;
                 }
-                if(cont>3){
+                if(cont > 3){
                     break;
-                }
+                }*/
             }
+            
+            System.out.println("Hilo " + Thread.currentThread().getId() + "salio");
             in.close();
+            out.close();
             socket.close();
 
         } catch (IOException e) {

@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 
 public class ProcesarInfoNodos {
 
-    public static final int PUERTO = 5000;
+    public static final int PUERTO = 6000;
     ServerSocket sc;
     Socket so;
     DataOutputStream salida;
